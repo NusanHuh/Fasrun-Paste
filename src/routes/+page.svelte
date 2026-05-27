@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
+    import { slide } from 'svelte/transition';
 
 	import LogoFasrun from '$lib/components/LogoFasrun.svelte';
 	import SearchButton from '$lib/components/SearchButton.svelte';
@@ -15,12 +16,71 @@
     let headerTOP: HTMLElement;
     let roFS: ResizeObserver | undefined;
 
+    let openFAQONE = $state(false);
+    let openFAQTWO = $state(false);
+    let openFAQTHREE = $state(false);
+    let openFAQFOUR = $state(false);
+    let openFAQFIVE = $state(false);
+    let openFAQSIX = $state(false);
+    let openFAQSEVEN = $state(false);
+
+    let openDeveloperMenuMobile = $state(true);
+    let openDokumenMenuMobile = $state(false);
+    let openLaporanMenuMobile = $state(false);
+
+    let openmenuMobile = $state(false);
+
     function updatePadding() {
         const heightPADDINGTOP = headerTOP.offsetHeight;
         
         if (containerONE && headerTOP) {
             containerONE.style.paddingTop = `${heightPADDINGTOP + 70}px`;
         }
+    }
+
+    function openMenuMobileDev() {
+        openmenuMobile = true;
+    }
+    function closeMenuMobileDev() {
+        openmenuMobile = false;
+    }
+
+    function opencloseFAQONE() {
+        openFAQONE = !openFAQONE;
+    }
+    function opencloseFAQTWO() {
+        openFAQTWO = !openFAQTWO;
+    }
+    function opencloseFAQTHREE() {
+        openFAQTHREE = !openFAQTHREE;
+    }
+    function opencloseFAQFOUR() {
+        openFAQFOUR = !openFAQFOUR;
+    }
+    function opencloseFAQFIVE() {
+        openFAQFIVE = !openFAQFIVE;
+    }
+    function opencloseFAQSIX() {
+        openFAQSIX = !openFAQSIX;
+    }
+    function opencloseFAQSEVEN() {
+        openFAQSEVEN = !openFAQSEVEN;
+    }
+
+    function openDevMenu() {
+        openDeveloperMenuMobile = true;
+        openDokumenMenuMobile = false;
+        openLaporanMenuMobile = false;
+    }
+    function openDokMenu() {
+        openDeveloperMenuMobile = false;
+        openDokumenMenuMobile = true;
+        openLaporanMenuMobile = false;
+    }
+    function openLapMenu() {
+        openDeveloperMenuMobile = false;
+        openDokumenMenuMobile = false;
+        openLaporanMenuMobile = true;
     }
 
     const code = `const { fasrun } = require("fasrunrestmodule");
@@ -82,7 +142,7 @@
     <LogoFasrun/>
     <SearchButton/>
 
-    <div class="w-fit h-8.25 flex items-center justify-center absolute right-7.5 gap-4.25">
+    <div class="w-fit h-8.25 flex items-center justify-center absolute right-7.5 gap-4.25 max-sm:hidden">
         <Button class="w-fit h-fit p-0 font-sans cursor-pointer text-[15px] text-[#59636e] transition-all duration-300 ease-in-out focus:outline-none focus:ring-0 focus:border-0 hover:text-[#1f2328]">Developer</Button>
         <Dropdown>
             <DropdownHeader>
@@ -130,26 +190,126 @@
         <button class="w-fit h-fit p-0 font-sans cursor-pointer text-[15px] text-[#59636e] transition-all duration-300 ease-in-out focus:outline-none focus:ring-0 focus:border-0 hover:text-[#1f2328]">Masuk</button>
         <button class="group w-fit pl-3.75 pr-3.75 h-full border-[1.5px] border-[#d5dce3] rounded-[5px] bg-transparent font-sans cursor-pointer text-[15px] text-[#59636e] transition-all duration-300 ease-in-out flex items-center justify-center gap-1.5 hover:text-[#1f2328] hover:border-[#1f2328]"><svg class="w-2.5 fill-[#59636e] transition-all duration-300 ease-in-out group-hover:fill-[#1f2328]" version="1.1" xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(2,8)"/><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(4,6)"/><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(6,4)"/><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(4,2)"/><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(2,0)"/></svg>Daftar</button>
     </div>
+
+    <div class="w-fit h-8.25 hidden items-center justify-center absolute right-7.5 gap-3 max-sm:flex">
+        <button class="group w-fit pl-3.75 pr-3.75 h-full border-[1.5px] border-[#d5dce3] rounded-[5px] bg-transparent font-sans cursor-pointer text-[14px] text-[#59636e] transition-all duration-300 ease-in-out flex items-center justify-center gap-1.5 hover:text-[#1f2328] hover:border-[#1f2328]" aria-label="btndaftarmobile"><svg class="w-2 fill-[#59636e] transition-all duration-300 ease-in-out group-hover:fill-[#1f2328]" version="1.1" xmlns="http://www.w3.org/2000/svg" width="10" height="10"><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(2,8)"/><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(4,6)"/><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(6,4)"/><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(4,2)"/><path d="M0 0 C0.66 0 1.32 0 2 0 C2 0.66 2 1.32 2 2 C1.34 2 0.68 2 0 2 C0 1.34 0 0.68 0 0 Z " transform="translate(2,0)"/></svg>Daftar</button>
+        <button onclick={openMenuMobileDev} class="group w-fit pl-3.75 pr-3.75 h-full border-[1.5px] border-[#d5dce3] rounded-[5px] bg-transparent font-sans cursor-pointer text-[14px] text-[#59636e] transition-all duration-300 ease-in-out flex items-center justify-center gap-1.5 hover:text-[#1f2328] hover:border-[#1f2328]" aria-label="btnopenmenumobile"><svg class="w-3 fill-[#59636e] transition-all duration-300 ease-in-out group-hover:fill-[#1f2328]" id="bars" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="1" y="11" width="22" height="2"/><rect x="1" y="19" width="22" height="2"/><rect x="1" y="3" width="22" height="2"/></svg></button>
+    </div>
 </header>
 
+{#if openmenuMobile}
+<aside class="w-full h-screen bg-[#ffffff] z-1000 fixed top-0 left-0 p-5 flex flex-col gap-3" transition:slide>
+    <button onclick={closeMenuMobileDev} class="absolute top-5 right-7.5" aria-label="btnclosemenumobile">
+        <svg class="w-6.25 cursor-pointer fill-[#1f2328]" id="window-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22,2v-1H2v1h-1v20h1v1h20v-1h1V2h-1Zm-1,19H3V3h18v18Z"/><polygon points="15 13 16 13 16 14 17 14 17 15 18 15 18 16 17 16 17 17 16 17 16 18 15 18 15 17 14 17 14 16 13 16 13 15 11 15 11 16 10 16 10 17 9 17 9 18 8 18 8 17 7 17 7 16 6 16 6 15 7 15 7 14 8 14 8 13 9 13 9 11 8 11 8 10 7 10 7 9 6 9 6 8 7 8 7 7 8 7 8 6 9 6 9 7 10 7 10 8 11 8 11 9 13 9 13 8 14 8 14 7 15 7 15 6 16 6 16 7 17 7 17 8 18 8 18 9 17 9 17 10 16 10 16 11 15 11 15 13"/></svg>
+    </button>
+
+    <button class="w-full text-left text-[#1f2328] font-bold text-[18px]">Masuk</button>
+    <button class="w-full text-left text-[#1f883d] font-bold text-[18px]">Daftar</button>
+
+    <div class="w-full h-full grid grid-cols-[100px_1fr] overflow-hidden mt-5">
+        <div class="w-full h-full flex flex-col items-start justify-start border-r-2 border-r-[#1f2328] bg-transparent pr-2.5 overflow-auto">
+            <button onclick={openDevMenu} class="w-full text-left py-4.25 text-[15px] text-[#1f2328] font-semibold" style="border-bottom: {openDeveloperMenuMobile ? "2px solid #1f2328" : "none"}; border-top: {openDeveloperMenuMobile ? "2px solid #1f2328" : "none"};">Developer</button>
+            <button onclick={openDokMenu} class="w-full text-left py-4.25 text-[15px] text-[#1f2328] font-semibold" style="border-bottom: {openDokumenMenuMobile ? "2px solid #1f2328" : "none"}; border-top: {openDokumenMenuMobile ? "2px solid #1f2328" : "none"};">Dokumen</button>
+            <button onclick={openLapMenu} class="w-full text-left py-4.25 text-[15px] text-[#1f2328] font-semibold" style="border-bottom: {openLaporanMenuMobile ? "2px solid #1f2328" : "none"}; border-top: {openLaporanMenuMobile ? "2px solid #1f2328" : "none"};">Laporan</button>
+        </div>
+
+        <div style="display: {openDeveloperMenuMobile ? "flex" : "none"};" class="w-full h-full bg-transparent flex-col items-start justify-start pl-3 overflow-auto gap-4">
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Fasrun <span class="text-[#1f883d]">CLI</span></h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Dengan Fasrun CLI anda bisa mengunggah kode anda lewat terminal langsung di folder proyek anda.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Fasrun <span class="text-[#1f883d]">SDK</span></h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Dengan adanya SDK resmi anda bisa menginstal nya dan gunakan dengan mudah di python, nodejs, dan golang.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Fasrun <span class="text-[#1f883d]">API</span></h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Dengan API anda bisa intergrasi lewat http dengan mudah dan hampir semua bahasa bisa.</p>
+            </button>
+        </div>
+
+        <div style="display: {openDokumenMenuMobile ? "flex" : "none"};" class="w-full h-full bg-transparent flex-col items-start justify-start pl-3 overflow-auto gap-4">
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Memulai</h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Memulai dengan setup pengguna untuk memakai Fasrun Paste dengan benar dan baik.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Cara membuat <span class="text-[#1f883d]">paste</span></h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Cara menggunakan paste di website, CLI, SDK, atau API.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold"><span class="text-[#1f883d]">API</span> reference</h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Full tutorial dalam menggunakan API untuk mengunggah kode.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold"><span class="text-[#1f883d]">CLI</span> guide</h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Full tutorial dalam menggunakan CLI dimulai dari install.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold"><span class="text-[#1f883d]">SDK</span></h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Full tutorial untuk menggunakan SDK di tiga bahasa yang di support.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Lainnya</h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Untuk dokumentasi lengkapnya anda bisa klik tombol ini.</p>
+            </button>
+        </div>
+
+        <div style="display: {openLaporanMenuMobile ? "flex" : "none"};" class="w-full h-full bg-transparent flex-col items-start justify-start pl-3 overflow-auto gap-4">
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Bug</h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Jika menemukan bug seperti tombol tidak bsia di klik maka laporkan.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Error</h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Jika uploader error anda bisa melaporkan di halaman laporan.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Kegagalan</h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Jika saat mengupload gagal terus atau lainnya anda bisa melaporkan hal tersebut.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Tampilan rusak</h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Jika tampilan website rusak atau kacau anda bisa melaporkan itu.</p>
+            </button>
+
+            <button class="flex flex-col items-start justify-start cursor-pointer text-left">
+                <h3 class="text-[16px] text-[#1f2328] font-semibold">Lainnya</h3>
+                <p class="text-[13.5px] text-[#1f2328] mt-1.25">Ada laporan lain, anda bisa kirim laporan sesuai keinginan anda.</p>
+            </button>
+        </div>
+    </div>
+</aside>
+{/if}
+
 <main class="w-full max-w-7xl mx-auto bg-[linear-gradient(rgba(93,93,93,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(93,93,93,0.1)_1px,transparent_1px)] bg-size-[43px_43px] font-sans">
-    <section bind:this={containerONE} class="px-17.5 pb-17.5 grid grid-cols-2 border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3]">
-        <div class="w-full h-fit flex flex-col items-start justify-start pr-12.5 z-800">
+    <section bind:this={containerONE} class="px-17.5 max-sm:px-7.5 pb-17.5 grid grid-cols-2 border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] max-sm:grid-cols-1 max-sm:gap-12.5">
+        <div class="w-full h-fit flex flex-col items-start justify-start pr-12.5 z-800 max-sm:pr-0">
             <div class="px-2.5 py-1.25 flex items-center justify-center border-[1.5px] border-[#d5dce3] rounded-[3px] bg-[#f6f8fa] mb-6.75 gap-2.5">
                 <svg class="w-3.25 fill-[#1f2328] animate-[dotsAnimation_3s_infinite_ease-in-out]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320z"/></svg>
                 <p class="text-[#59636e] text-[13px]"><span>v1.0.0</span>&nbsp;<span>Development</span></p>
             </div>
 
-            <h1 class="w-full text-[64px] leading-15.75 font-semibold text-[#1f2328]">Mengunggah menjadi lebih <span class="text-[#1f883d]">sederhana</span>.</h1>
-            <p class="text-[#59636e] text-[20px] mt-5 w-full">Membagikan kode anda secara <span class="text-[#1f2328] font-semibold">mudah</span> dan <span class="text-[#1f2328] font-semibold">cepat</span>, menggunakan Fasrun Paste anda <span class="text-[#1f883d] font-semibold">bisa melakukannya</span>.</p>
+            <h1 class="w-full text-[64px] leading-15.75 font-semibold text-[#1f2328] max-sm:text-[37px] max-sm:leading-10.25">Mengunggah menjadi lebih <span class="text-[#1f883d]">sederhana</span>.</h1>
+            <p class="text-[#59636e] text-[20px] mt-5 w-full max-sm:text-[17px]">Membagikan kode anda secara <span class="text-[#1f2328] font-semibold">mudah</span> dan <span class="text-[#1f2328] font-semibold">cepat</span>, menggunakan Fasrun Paste anda <span class="text-[#1f883d] font-semibold">bisa melakukannya</span>.</p>
 
-            <div class="w-full flex flex-row gap-2.5 mt-6.25 items-start justify-start">
-                <button class="px-5 h-11.25 text-[16px] bg-[#1f883d] text-[#ffffff] border-2 border-[#1f2328] rounded-[5px] cursor-pointer font-semibold flex items-center justify-center">Mulai sekarang</button>
-                <button class="px-5 h-11.25 text-[16px] bg-[#ffffff] text-[#59636e] border-2 border-[#d5dce3] rounded-[5px] cursor-pointer font-semibold flex items-center justify-center gap-1.25"><svg class="w-4 fill-[#59636e]" id="book-bookmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,17h1V16h1V2H21V1H4V2H3V3H2V21H3v1H4v1H21V22h1V21H21V20H20Zm-2,4H5V20H4V18H5V17H18ZM4,3h8v7h1V9h1V8h1V9h1v1h1V3h3V15H4Z"/></svg>Dokumentasi</button>
+            <div class="w-full flex flex-row gap-2.5 mt-6.25 items-start justify-start max-sm:flex-col">
+                <button class="px-5 h-11.25 text-[16px] bg-[#1f883d] text-[#ffffff] border-2 border-[#1f2328] rounded-[5px] cursor-pointer font-semibold flex items-center justify-center max-sm:w-full">Mulai sekarang</button>
+                <button class="px-5 h-11.25 text-[16px] bg-[#ffffff] text-[#59636e] border-2 border-[#d5dce3] rounded-[5px] cursor-pointer font-semibold flex items-center justify-center gap-1.25 max-sm:w-full"><svg class="w-4 fill-[#59636e]" id="book-bookmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,17h1V16h1V2H21V1H4V2H3V3H2V21H3v1H4v1H21V22h1V21H21V20H20Zm-2,4H5V20H4V18H5V17H18ZM4,3h8v7h1V9h1V8h1V9h1v1h1V3h3V15H4Z"/></svg>Dokumentasi</button>
             </div>
         </div>
 
-        <div class="w-full h-fit pl-12.5 flex items-center justify-center z-800">
+        <div class="w-full h-fit pl-12.5 flex items-center justify-center z-800 max-sm:pl-0">
             <div class="w-full h-fit bg-[#f6f8fa] border-[1.5px] border-[#d5dce3] rounded-[7px] shadow-[0px_0px_30px_rgba(31,136,61,0.1)] overflow-hidden">
                 <div class="w-full p-5 bg-[#ffffff] flex items-center justify-start relative gap-1.75 border-b-[1.5px] border-b-[#d5dce3]">
                     <div class="w-3.75 h-3.75 rounded-[100%] bg-[#ff5f56]"></div>
@@ -172,7 +332,7 @@
         </div>
     </section>
 
-    <section class="px-17.5 pt-8.75 pb-8.75 bg-[#f6f8fa] border-t-[1.5px] border-t-[#d5dce3] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] grid grid-cols-4">
+    <section class="px-17.5 pt-8.75 pb-8.75 bg-[#f6f8fa] border-t-[1.5px] border-t-[#d5dce3] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] grid grid-cols-4 max-sm:grid-cols-2 max-sm:gap-7.5 max-sm:px-7.5">
         <div class="w-full h-fit flex items-center justify-center flex-col">
             <h2 class="text-[#1f2328] text-[32px] font-bold">120+</h2>
             <p class="text-[#59636e] text-[16px] font-medium">Bahasa</p>
@@ -194,14 +354,14 @@
         </div>
     </section>
 
-    <section class="px-17.5 pb-17.5 pt-17.5 bg-[#ffffff] border-t-[1.5px] border-t-[#d5dce3] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] flex flex-col">
+    <section class="px-17.5 pb-17.5 pt-17.5 bg-[#ffffff] border-t-[1.5px] border-t-[#d5dce3] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] flex flex-col max-sm:px-7.5">
         <div class="w-full h-fit flex flex-col items-center justify-center">
             <p class="px-3.25 py-1.25 bg-[rgba(31,136,61,0.1)] rounded-[5px] text-[#1f883d] text-[13px] font-semibold mb-2.5">Keuntungan</p>
-            <h2 class="text-[35px] text-[#1f2328] font-bold w-full text-center max-w-150 leading-9.25">Memberikan yang terbaik untuk <span class="text-[#1f883d]">mempublikasi</span> kode anda</h2>
+            <h2 class="text-[35px] text-[#1f2328] font-bold w-full text-center max-w-150 leading-9.25 max-sm:text-[23px] max-sm:leading-5.5">Memberikan yang terbaik untuk <span class="text-[#1f883d]">mempublikasi</span> kode anda</h2>
         </div>
 
-        <div class="w-full h-fit grid grid-cols-[1fr_400px] gap-5 mt-12">
-            <div class="p-5 bg-[#ffffff] border-[1.5px] border-[#d5dce3] rounded-[7px] shadow-[0px_0px_30px_rgba(31,136,61,0.1)] flex flex-row items-start justify-start relative overflow-hidden gap-5">
+        <div class="w-full h-fit grid grid-cols-[1fr_400px] gap-5 mt-12 max-sm:grid-cols-1">
+            <div class="p-5 bg-[#ffffff] border-[1.5px] border-[#d5dce3] rounded-[7px] shadow-[0px_0px_30px_rgba(31,136,61,0.1)] flex flex-row items-start justify-start relative overflow-hidden gap-5 max-sm:flex-col max-sm:gap-3">
                 <div class="w-50 h-50 bg-[rgba(31,136,61,0.02)] absolute rounded-[100%] -right-10 -top-20"></div>
 
                 <div class="w-fit h-auto flex items-start justify-start">
@@ -210,11 +370,11 @@
                     </div>
                 </div>
 
-                <div class="w-fit h-auto flex flex-col items-start justify-start">
-                    <h2 class="text-[20px] text-[#1f2328] font-semibold">Intergrasi <span class="text-[#1f883d]">mudah</span> dilakukan</h2>
-                    <p class="text-[#59636e] text-[15px] mt-1.75">Dengan adanya penyediaan SDK dan API anda bisa membuat aplikasi anda sendiri dan menambahkan fitur uploader di dalam aplikasi tersebut dengan mudah dan cepat.</p>
+                <div class="w-full h-auto flex flex-col items-start justify-start">
+                    <h2 class="text-[20px] text-[#1f2328] font-semibold max-sm:text-[18px]">Intergrasi <span class="text-[#1f883d]">mudah</span> dilakukan</h2>
+                    <p class="text-[#59636e] text-[15px] mt-1.75 max-sm:text-[13.5px]">Dengan adanya penyediaan SDK dan API anda bisa membuat aplikasi anda sendiri dan menambahkan fitur uploader di dalam aplikasi tersebut dengan mudah dan cepat.</p>
 
-                    <div class="w-fit h-fit grid grid-flow-col auto-cols-max gap-1.25 mt-2.5">
+                    <div class="w-full h-fit flex flex-wrap gap-2 mt-3">
                         <p class="w-fit py-1.25 px-2.5 bg-[#f6f8fa] text-[10px] text-[#59636e] rounded-[3px]">SDK</p>
                         <p class="w-fit py-1.25 px-2.5 bg-[#f6f8fa] text-[10px] text-[#59636e] rounded-[3px]">API</p>
                         <p class="w-fit py-1.25 px-2.5 bg-[#f6f8fa] text-[10px] text-[#59636e] rounded-[3px]">NodeJS</p>
@@ -232,13 +392,13 @@
                 </div>
 
                 <div class="w-fit h-auto flex flex-col items-start justify-start">
-                    <h2 class="text-[20px] text-[#1f2328] font-semibold">Upload kode dengan <span class="text-[#1f883d]">gratis</span></h2>
-                    <p class="text-[#59636e] text-[15px] mt-1.75">Fasrun Paste memberikan harga 0Rp untuk mengupload kode anda di sini.</p>
+                    <h2 class="text-[20px] text-[#1f2328] font-semibold max-sm:text-[18px] max-sm:leading-5">Upload kode dengan <span class="text-[#1f883d]">gratis</span></h2>
+                    <p class="text-[#59636e] text-[15px] mt-1.75 max-sm:text-[13.5px]">Fasrun Paste memberikan harga 0Rp untuk mengupload kode anda di sini.</p>
                 </div>
             </div>
         </div>
 
-        <div class="w-full h-fit grid grid-cols-3 gap-5 mt-5">
+        <div class="w-full h-fit grid grid-cols-3 gap-5 mt-5 max-sm:grid-cols-1">
             <div class="p-5 bg-[#ffffff] border-[1.5px] border-[#d5dce3] rounded-[7px] shadow-[0px_0px_30px_rgba(31,136,61,0.1)] flex flex-col items-start justify-start gap-3">
                 <div class="w-fit h-auto flex items-start justify-start">
                     <div class="px-3.5 py-3.5 rounded-[7px] bg-[#f6f8fa]">
@@ -247,8 +407,8 @@
                 </div>
 
                 <div class="w-fit h-auto flex flex-col items-start justify-start">
-                    <h2 class="text-[20px] text-[#1f2328] font-semibold"><span class="text-[#1f883d]">Dokumen</span> SDK dan API</h2>
-                    <p class="text-[#59636e] text-[15px] mt-1.75">Fasrun Paste memberikan dokumentasi untuk penggunaan SDK dan API.</p>
+                    <h2 class="text-[20px] text-[#1f2328] font-semibold max-sm:text-[18px] max-sm:leading-5"><span class="text-[#1f883d]">Dokumen</span> SDK dan API</h2>
+                    <p class="text-[#59636e] text-[15px] mt-1.75 max-sm:text-[13.5px]">Fasrun Paste memberikan dokumentasi untuk penggunaan SDK dan API.</p>
                 </div>
             </div>
 
@@ -260,8 +420,8 @@
                 </div>
 
                 <div class="w-fit h-auto flex flex-col items-start justify-start">
-                    <h2 class="text-[20px] text-[#1f2328] font-semibold">Menggunakan <span class="text-[#1f883d]">CLI</span></h2>
-                    <p class="text-[#59636e] text-[15px] mt-1.75">Memudahkan upload langsung dari folder project anda ke Fasrun Paste.</p>
+                    <h2 class="text-[20px] text-[#1f2328] font-semibold max-sm:text-[18px] max-sm:leading-5">Menggunakan <span class="text-[#1f883d]">CLI</span></h2>
+                    <p class="text-[#59636e] text-[15px] mt-1.75 max-sm:text-[13.5px]">Memudahkan upload langsung dari folder project anda ke Fasrun Paste.</p>
                 </div>
             </div>
 
@@ -273,17 +433,17 @@
                 </div>
 
                 <div class="w-fit h-auto flex flex-col items-start justify-start">
-                    <h2 class="text-[20px] text-[#1f2328] font-semibold">Berbagi dengan <span class="text-[#1f883d]">mudah</span></h2>
-                    <p class="text-[#59636e] text-[15px] mt-1.75">Dengan klik tombol berbagi anda bisa kirim ke teman atau siapapun dengan mudah.</p>
+                    <h2 class="text-[20px] text-[#1f2328] font-semibold max-sm:text-[18px] max-sm:leading-5">Berbagi dengan <span class="text-[#1f883d]">mudah</span></h2>
+                    <p class="text-[#59636e] text-[15px] mt-1.75 max-sm:text-[13.5px]">Dengan klik tombol berbagi anda bisa kirim ke teman atau siapapun dengan mudah.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="px-17.5 pb-17.5 pt-7.5 bg-[#ffffff] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] flex flex-col">
+    <section class="px-17.5 pb-17.5 pt-7.5 bg-[#ffffff] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] flex flex-col max-sm:px-7.5">
         <div class="w-full h-fit flex flex-col items-center justify-center">
             <p class="px-3.25 py-1.25 bg-[rgba(31,136,61,0.1)] rounded-[5px] text-[#1f883d] text-[13px] font-semibold mb-2.5">Kompatibel</p>
-            <h2 class="text-[35px] text-[#1f2328] font-bold w-full text-center max-w-150 leading-9.25">Bangun dengan <span class="text-[#1f883d]">banyak</span> bahasa pemrograman favorit</h2>
+            <h2 class="text-[35px] text-[#1f2328] font-bold w-full text-center max-w-150 leading-9.25 max-sm:text-[23px] max-sm:leading-5.5">Bangun dengan <span class="text-[#1f883d]">banyak</span> bahasa pemrograman favorit</h2>
         </div>
 
         <div class="w-full h-fit flex items-center mt-12 relative gap-5 overflow-hidden before:absolute before:left-0 before:top-0 before:h-full before:w-20 before:bg-linear-to-r before:from-[#ffffff] before:to-transparent before:z-10 before:pointer-events-none after:absolute after:right-0 after:top-0 after:h-full after:w-20 after:bg-linear-to-l after:from-[#ffffff] after:to-transparent after:z-10 after:pointer-events-none marquee-wrapper">
@@ -298,13 +458,13 @@
         </div>
     </section>
 
-    <section class="px-17.5 pb-17.5 pt-7.5 bg-[#ffffff] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] flex flex-col">
+    <section class="px-17.5 pb-17.5 pt-7.5 bg-[#ffffff] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] flex flex-col max-sm:px-7.5">
         <div class="w-full h-fit flex flex-col items-center justify-center">
             <p class="px-3.25 py-1.25 bg-[rgba(31,136,61,0.1)] rounded-[5px] text-[#1f883d] text-[13px] font-semibold mb-2.5">Alat Developer</p>
-            <h2 class="text-[35px] text-[#1f2328] font-bold w-full text-center max-w-150 leading-9.25">SDK & <span class="text-[#1f883d]">CLI</span></h2>
+            <h2 class="text-[35px] text-[#1f2328] font-bold w-full text-center max-w-150 leading-9.25 max-sm:text-[23px] max-sm:leading-5.5">SDK & <span class="text-[#1f883d]">CLI</span></h2>
         </div>
 
-        <div class="w-full h-fit grid grid-cols-2 mt-12 gap-5">
+        <div class="w-full h-fit grid grid-cols-2 mt-12 gap-5 max-sm:grid-cols-1">
             <div class="w-full h-auto p-6.25 flex flex-col items-start justify-start border-[1.5px] border-[#d5dce3] rounded-[7px] bg-[#ffffff] shadow-[0px_0px_30px_rgba(31,136,61,0.1)]">
                 <div class="w-full h-fit flex items-center justify-start gap-3">
                     <svg class="w-5 fill-[rgba(31,35,40,0.87)]" id="box-usd" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22,6v-2h-1v-1h-1v-1h-1v-1H5v1h-1v1h-1v1h-1v2h-1v16h1v1h20v-1h1V6h-1Zm-9-3h5v1h1v1h1v2h-7V3Zm-9,2h1v-1h1v-1h5v4h-7v-2Zm-1,16v-12h8v2h-2v4h1v1h3v1h-4v2h2v2H3Zm18,0h-8v-2h2v-4h-1v-1h-3v-1h4v-2h-2v-2h8v12Z"/></svg>
@@ -351,46 +511,103 @@
         </div>
     </section>
 
-    <section class="px-17.5 pb-17.5 pt-7.5 bg-[#ffffff] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] flex flex-col">
+    <section class="px-17.5 pb-17.5 pt-7.5 bg-[#ffffff] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] flex flex-col max-sm:px-7.5">
         <div class="w-full h-fit flex flex-col items-center justify-center">
             <p class="px-3.25 py-1.25 bg-[rgba(31,136,61,0.1)] rounded-[5px] text-[#1f883d] text-[13px] font-semibold mb-2.5">FAQ</p>
-            <h2 class="text-[35px] text-[#1f2328] font-bold w-full text-center max-w-150 leading-9.25">Pertanyaan <span class="text-[#1f883d]">umum</span></h2>
+            <h2 class="text-[35px] text-[#1f2328] font-bold w-full text-center max-w-150 leading-9.25 max-sm:text-[23px] max-sm:leading-5.5">Pertanyaan <span class="text-[#1f883d]">umum</span></h2>
         </div>
 
         <div class="w-full h-fit flex items-center justify-center mt-12">
             <div class="w-full max-w-175 h-fit flex flex-col items-start justify-start overflow-hidden border-[1.5px] border-[#d5dce3] rounded-[7px] shadow-[0px_0px_30px_rgba(31,136,61,0.1)]">
-                <button class="w-full flex items-center justify-start py-4.25 pl-5 pr-5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3]">Apakah Fasrun Paste gratis digunakan? <svg class="w-4.25 absolute right-5" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
-                <div class="w-full h-0 overflow-hidden py-0 px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]">
-                    <p class="text-[#1f2328] text-[14px]">Ya, Fasrun Paste gratis untuk digunakan siapapun yang ingin mengunggah kode ke publik maupun private. Anda dapat mengunggah tanpa biaya sepeserpun atau 0Rp, semua jenis kode bisa di upload di sini dengan mudah.</p>
+                <button onclick={opencloseFAQONE} class="w-full flex items-center justify-start py-4.25 pl-5 pr-12.5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3] text-left leading-5">Apakah Fasrun Paste gratis digunakan? <svg style="rotate: {openFAQONE ? "90deg" : "0deg"};" class="w-4.25 absolute right-5 transition-all duration-300 ease-in-out" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
+                {#if openFAQONE}
+                <div class="w-full overflow-hidden px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]" style="height: {openFAQONE ? "fit-content" : "0px"}; padding-block: {openFAQONE ? "17px" : "0px"}; display: {openFAQONE ? "flex" : "none"};" transition:slide>
+                    <p class="text-[#1f2328] text-[14px] max-sm:text-[13px]">Ya, Fasrun Paste gratis untuk digunakan siapapun yang ingin mengunggah kode ke publik maupun private. Anda dapat mengunggah tanpa biaya sepeserpun atau 0Rp, semua jenis kode bisa di upload di sini dengan mudah.</p>
                 </div>
-                <button class="w-full flex items-center justify-start py-4.25 pl-5 pr-5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3]">Dokumentasi Fasrun Paste apakah lengkap? <svg class="w-4.25 absolute right-5" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
-                <div class="w-full h-0 overflow-hidden py-0 px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]">
-                    <p class="text-[#1f2328] text-[14px]">Lumayan, dokumentasi yang diberikan oleh developer Fasrun Paste sudah cukup untuk keperluan developer yang baru menggunakan Fasrun Paste ini.</p>
+                {/if}
+
+                <button onclick={opencloseFAQTWO} class="w-full flex items-center justify-start py-4.25 pl-5 pr-12.5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3] text-left leading-5">Dokumentasi Fasrun Paste apakah lengkap? <svg style="rotate: {openFAQTWO ? "90deg" : "0deg"};" class="w-4.25 absolute right-5 transition-all duration-300 ease-in-out" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
+                {#if openFAQTWO}
+                <div class="w-full overflow-hidden px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]" style="height: {openFAQTWO ? "fit-content" : "0px"}; padding-block: {openFAQTWO ? "17px" : "0px"}; display: {openFAQTWO ? "flex" : "none"};" transition:slide>
+                    <p class="text-[#1f2328] text-[14px] max-sm:text-[13px]">Lumayan, dokumentasi yang diberikan oleh developer Fasrun Paste sudah cukup untuk keperluan developer yang baru menggunakan Fasrun Paste ini.</p>
                 </div>
-                <button class="w-full flex items-center justify-start py-4.25 pl-5 pr-5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3]">Apakah bisa upload tanpa register/login? <svg class="w-4.25 absolute right-5" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
-                <div class="w-full h-0 overflow-hidden py-0 px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]">
-                    <p class="text-[#1f2328] text-[14px]">Bisa, namun kode yang anda upload akan menjadi public only dan tidak bisa private milik anda sendiri jadi kode anda bisa dilihat oleh siapapun yang menemukan kode anda.</p>
+                {/if}
+
+                <button onclick={opencloseFAQTHREE} class="w-full flex items-center justify-start py-4.25 pl-5 pr-12.5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3] text-left leading-5">Apakah bisa upload tanpa register/login? <svg style="rotate: {openFAQTHREE ? "90deg" : "0deg"};" class="w-4.25 absolute right-5 transition-all duration-300 ease-in-out" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
+                {#if openFAQTHREE}
+                <div class="w-full overflow-hidden px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]" style="height: {openFAQTHREE ? "fit-content" : "0px"}; padding-block: {openFAQTHREE ? "17px" : "0px"}; display: {openFAQTHREE ? "flex" : "none"};" transition:slide>
+                    <p class="text-[#1f2328] text-[14px] max-sm:text-[13px]">Bisa, namun kode yang anda upload akan menjadi public only dan tidak bisa private milik anda sendiri jadi kode anda bisa dilihat oleh siapapun yang menemukan kode anda.</p>
                 </div>
-                <button class="w-full flex items-center justify-start py-4.25 pl-5 pr-5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3]">Berapa baris kode yang dapat di upload? <svg class="w-4.25 absolute right-5" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
-                <div class="w-full h-0 overflow-hidden py-0 px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]">
-                    <p class="text-[#1f2328] text-[14px]">Lumayan banyak yaitu 20K+ bari kode yang bisa anda upload pada Fasrun Paste ini. Jadi anda bisa mengupload kode panjang anda di sini dengan mudah.</p>
+                {/if}
+
+                <button onclick={opencloseFAQFOUR} class="w-full flex items-center justify-start py-4.25 pl-5 pr-12.5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3] text-left leading-5">Berapa baris kode yang dapat di upload? <svg style="rotate: {openFAQFOUR ? "90deg" : "0deg"};" class="w-4.25 absolute right-5 transition-all duration-300 ease-in-out" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
+                {#if openFAQFOUR}
+                <div class="w-full overflow-hidden px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]" style="height: {openFAQFOUR ? "fit-content" : "0px"}; padding-block: {openFAQFOUR ? "17px" : "0px"}; display: {openFAQFOUR ? "flex" : "none"};" transition:slide>
+                    <p class="text-[#1f2328] text-[14px] max-sm:text-[13px]">Lumayan banyak yaitu 20K+ baris kode yang bisa anda upload pada Fasrun Paste ini. Jadi anda bisa mengupload kode panjang anda di sini dengan mudah.</p>
                 </div>
-                <button class="w-full flex items-center justify-start py-4.25 pl-5 pr-5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3]">Apakah bisa mengupload catatan/txt? <svg class="w-4.25 absolute right-5" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
-                <div class="w-full h-0 overflow-hidden py-0 px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]">
-                    <p class="text-[#1f2328] text-[14px]">Bisa, Fasrun Paste menyediakan ekstensi file .txt guna untuk menulis catatan atau kebutuhan lainnya yang menggunakan file txt.</p>
+                {/if}
+
+                <button onclick={opencloseFAQFIVE} class="w-full flex items-center justify-start py-4.25 pl-5 pr-12.5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3] text-left leading-5">Apakah bisa mengupload catatan/txt? <svg style="rotate: {openFAQFIVE ? "90deg" : "0deg"};" class="w-4.25 absolute right-5 transition-all duration-300 ease-in-out" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
+                {#if openFAQFIVE}
+                <div class="w-full overflow-hidden px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]" style="height: {openFAQFIVE ? "fit-content" : "0px"}; padding-block: {openFAQFIVE ? "17px" : "0px"}; display: {openFAQFIVE ? "flex" : "none"};" transition:slide>
+                    <p class="text-[#1f2328] text-[14px] max-sm:text-[13px]">Bisa, Fasrun Paste menyediakan ekstensi file .txt guna untuk menulis catatan atau kebutuhan lainnya yang menggunakan file txt.</p>
                 </div>
-                <button class="w-full flex items-center justify-start py-4.25 pl-5 pr-5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3]">Saat mengupload apakah ada batasan upload?<svg class="w-4.25 absolute right-5" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
-                <div class="w-full h-0 overflow-hidden py-0 px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]">
-                    <p class="text-[#1f2328] text-[14px]">Tidak ada, anda bisa mengupload kode anda sepuasnya dengan bebas dan mudah tentunya, jadi anda bebas mau upload kode dengan baris panjang dan bisa upload tanpa limit.</p>
+                {/if}
+
+                <button onclick={opencloseFAQSIX} class="w-full flex items-center justify-start py-4.25 pl-5 pr-12.5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer border-b-[1.5px] border-b-[#d5dce3] text-left leading-5">Saat mengupload apakah ada batasan upload?<svg style="rotate: {openFAQSIX ? "90deg" : "0deg"};" class="w-4.25 absolute right-5 transition-all duration-300 ease-in-out" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
+                {#if openFAQSIX}
+                <div class="w-full overflow-hidden px-5 border-b-[1.5px] border-b-[#d5dce3] bg-[#f6f8fa]" style="height: {openFAQSIX ? "fit-content" : "0px"}; padding-block: {openFAQSIX ? "17px" : "0px"}; display: {openFAQSIX ? "flex" : "none"};" transition:slide>
+                    <p class="text-[#1f2328] text-[14px] max-sm:text-[13px]">Tidak ada, anda bisa mengupload kode anda sepuasnya dengan bebas dan mudah tentunya, jadi anda bebas mau upload kode dengan baris panjang dan bisa upload tanpa limit.</p>
                 </div>
-                <button class="w-full flex items-center justify-start py-4.25 pl-5 pr-5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer">Apakah bisa drag & drop file?<svg class="w-4.25 absolute right-5" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
-                <div class="w-full h-0 overflow-hidden py-0 px-5 border-t-[1.5px] border-t-[#d5dce3] bg-[#f6f8fa]">
-                    <p class="text-[#1f2328] text-[14px]">Sangat bisa, anda bisa drag & drop pada Fasrun Paste ini guna untuk mengganti menyalin kode yang kadak di beberapa device membuat lag atau hal lainnya.</p>
+                {/if}
+                
+                <button onclick={opencloseFAQSEVEN} class="w-full flex items-center justify-start py-4.25 pl-5 pr-12.5 relative text-[16px] text-[#1f2328] font-semibold cursor-pointer text-left leading-5">Apakah bisa drag & drop file?<svg style="rotate: {openFAQSEVEN ? "90deg" : "0deg"};" class="w-4.25 absolute right-5 transition-all duration-300 ease-in-out" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
+                {#if openFAQSEVEN}
+                <div class="w-full overflow-hidden px-5 border-t-[1.5px] border-t-[#d5dce3] bg-[#f6f8fa]" style="height: {openFAQSEVEN ? "fit-content" : "0px"}; padding-block: {openFAQSEVEN ? "17px" : "0px"}; display: {openFAQSEVEN ? "flex" : "none"};" transition:slide>
+                    <p class="text-[#1f2328] text-[14px] max-sm:text-[13px]">Sangat bisa, anda bisa drag & drop pada Fasrun Paste ini guna untuk mengganti menyalin kode yang kadang di beberapa device membuat lag atau hal lainnya.</p>
                 </div>
+                {/if}
             </div>
         </div>
     </section>
 </main>
+
+<footer class="px-17.5 py-10 bg-[#f6f8fa] border-t-[1.5px] border-t-[#d5dce3] border-l-[1.5px] border-l-[#d5dce3] border-r-[1.5px] border-r-[#d5dce3] grid grid-cols-4 gap-12.5 max-sm:grid-cols-1 max-sm:px-7.5 max-sm:gap-7.5">
+    <div class="w-full h-fit flex flex-col items-start justify-start">
+        <LogoFasrun/>
+        <p class="text-[13px] mt-1.75 text-[#1f2328]">Memberikan kemudahan untuk berbagi kode ke publik, teman, sesama developer, dan lainnya.</p>
+        <div class="mt-1.75 flex items-center justify-start gap-1">
+            <svg class="w-6.75 fill-[#1f2328] cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M237.9 461.4C237.9 463.4 235.6 465 232.7 465C229.4 465.3 227.1 463.7 227.1 461.4C227.1 459.4 229.4 457.8 232.3 457.8C235.3 457.5 237.9 459.1 237.9 461.4zM206.8 456.9C206.1 458.9 208.1 461.2 211.1 461.8C213.7 462.8 216.7 461.8 217.3 459.8C217.9 457.8 216 455.5 213 454.6C210.4 453.9 207.5 454.9 206.8 456.9zM251 455.2C248.1 455.9 246.1 457.8 246.4 460.1C246.7 462.1 249.3 463.4 252.3 462.7C255.2 462 257.2 460.1 256.9 458.1C256.6 456.2 253.9 454.9 251 455.2zM316.8 72C178.1 72 72 177.3 72 316C72 426.9 141.8 521.8 241.5 555.2C254.3 557.5 258.8 549.6 258.8 543.1C258.8 536.9 258.5 502.7 258.5 481.7C258.5 481.7 188.5 496.7 173.8 451.9C173.8 451.9 162.4 422.8 146 415.3C146 415.3 123.1 399.6 147.6 399.9C147.6 399.9 172.5 401.9 186.2 425.7C208.1 464.3 244.8 453.2 259.1 446.6C261.4 430.6 267.9 419.5 275.1 412.9C219.2 406.7 162.8 398.6 162.8 302.4C162.8 274.9 170.4 261.1 186.4 243.5C183.8 237 175.3 210.2 189 175.6C209.9 169.1 258 202.6 258 202.6C278 197 299.5 194.1 320.8 194.1C342.1 194.1 363.6 197 383.6 202.6C383.6 202.6 431.7 169 452.6 175.6C466.3 210.3 457.8 237 455.2 243.5C471.2 261.2 481 275 481 302.4C481 398.9 422.1 406.6 366.2 412.9C375.4 420.8 383.2 435.8 383.2 459.3C383.2 493 382.9 534.7 382.9 542.9C382.9 549.4 387.5 557.3 400.2 555C500.2 521.8 568 426.9 568 316C568 177.3 455.5 72 316.8 72zM169.2 416.9C167.9 417.9 168.2 420.2 169.9 422.1C171.5 423.7 173.8 424.4 175.1 423.1C176.4 422.1 176.1 419.8 174.4 417.9C172.8 416.3 170.5 415.6 169.2 416.9zM158.4 408.8C157.7 410.1 158.7 411.7 160.7 412.7C162.3 413.7 164.3 413.4 165 412C165.7 410.7 164.7 409.1 162.7 408.1C160.7 407.5 159.1 407.8 158.4 408.8zM190.8 444.4C189.2 445.7 189.8 448.7 192.1 450.6C194.4 452.9 197.3 453.2 198.6 451.6C199.9 450.3 199.3 447.3 197.3 445.4C195.1 443.1 192.1 442.8 190.8 444.4zM179.4 429.7C177.8 430.7 177.8 433.3 179.4 435.6C181 437.9 183.7 438.9 185 437.9C186.6 436.6 186.6 434 185 431.7C183.6 429.4 181 428.4 179.4 429.7z"/></svg>
+            <svg class="w-6.75 fill-[#1f2328] cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M568 268.6L567.3 266.8L497.6 85C496.2 81.4 493.7 78.4 490.4 76.4C488 74.8 485.3 73.9 482.4 73.6C479.5 73.3 476.7 73.7 474 74.7C471.3 75.7 468.9 77.4 466.9 79.5C465 81.6 463.6 84.2 462.8 86.9L415.8 230.9L225.3 230.9L178.2 86.9C177.4 84.1 176 81.6 174.1 79.5C172.1 77.4 169.7 75.8 167 74.7C164.4 73.7 161.5 73.3 158.6 73.6C155.7 73.9 153 74.8 150.6 76.4C147.4 78.4 144.8 81.5 143.4 85L73.8 266.8L73 268.6C63 294.8 61.7 323.6 69.5 350.6C77.2 377.5 93.5 401.3 115.9 418.2L116.2 418.4L116.8 418.8L222.8 498.3C261.3 527.4 289.5 548.6 307.4 562.2C311.1 564.1 315.7 566.5 320.4 566.5C325.1 566.5 329.7 564.1 333.4 562.2C351.3 548.7 379.5 527.3 418 498.3L524.7 418.4L525 418.1C547.4 401.2 563.7 377.5 570.6 350.6C579.2 323.6 578 294.8 568 268.6z"/></svg>
+        </div>
+    </div>
+
+    <div class="w-full h-fit flex flex-col items-start justify-start gap-2.5 max-sm:gap-2">
+        <p class="text-[16px] font-semibold text-[#1f2328]">Developer</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Fasrun CLI</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Fasrun SDK</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Fasrun API</p>
+    </div>
+
+    <div class="w-full h-fit flex flex-col items-start justify-start gap-2.5 max-sm:gap-2">
+        <p class="text-[16px] font-semibold text-[#1f2328]">Dokumen</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Memulai</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Cara membuat paste</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">API reference</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">CLI guide</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">SDK</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Lainnya</p>
+    </div>
+
+    <div class="w-full h-fit flex flex-col items-start justify-start gap-2.5 max-sm:gap-2">
+        <p class="text-[16px] font-semibold text-[#1f2328]">Laporan</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Bug</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Error</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Kegagalan</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Tampilan rusak</p>
+        <p class="text-[14px] text-[#1f2328] cursor-pointer transition-all duration-300 ease-in-out hover:text-[#1f883d] max-sm:text-[13px]">Lainnya</p>
+    </div>
+</footer>
 
 <style>
     @keyframes marquee {
