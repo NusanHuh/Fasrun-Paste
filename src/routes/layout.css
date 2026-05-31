@@ -23,6 +23,16 @@
         display: none;
     }
 
+    ::selection {
+        background: rgba(31, 136, 61, 0.5);
+        color: #ffffff;
+    }
+
+    ::-moz-selection {
+        background: rgba(31, 136, 61, 0.5);
+        color: #ffffff;
+    }
+
     @keyframes dotsAnimation {
         0% {
             opacity: 0.5;

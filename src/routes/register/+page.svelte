@@ -1,10 +1,10 @@
-<main class="w-full h-screen overflow-x-hidden overflow-y-hidden grid grid-cols-2 max-sm:grid-cols-1 max-sm:overflow-y-auto max-sm:h-fit">
+<main class="font-sans w-full h-screen overflow-x-hidden overflow-y-hidden grid grid-cols-2 max-sm:grid-cols-1 max-sm:overflow-y-auto max-sm:h-fit">
     <div class="w-full h-full bg-[#000000] flex items-start justify-center px-17.5 py-17.5 relative max-sm:px-7.5 max-sm:pb-50 max-sm:pt-7.5">
         <div class="w-full max-w-100 h-fit flex flex-col items-start justify-start">
-            <h1 class="w-fit text-left text-[#ffffff] text-[30px] font-semibold leading-7.75">Masuk ke Fasrun Paste</h1>
-            <p class="text-[#ffffff] text-[13px] mt-5">Masuk dengan akun anda dan unggah kode sesuka anda.</p>
+            <h1 class="w-fit text-left text-[#ffffff] text-[30px] font-semibold leading-7.75">Buat akun anda gratis</h1>
+            <p class="text-[#ffffff] text-[13px] mt-5">Gunakan Fasrun Paste sesuka anda, dengan mendaftar anda baru saja memulai penggunaan.</p>
 
-            <button class="w-fit text-[#ffffff] text-[14px] mt-5 font-semibold flex items-center justify-start gap-1.25 hover:border-b-2 border-br-[#ffffff] cursor-pointer z-100" onclick={() => window.location.href="/register"}>Belum mempunyai akun? Daftar<svg class="w-4.25 fill-[#ffffff]" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
+            <button class="w-fit text-[#ffffff] text-[14px] mt-5 font-semibold flex items-center justify-start gap-1.25 hover:border-b-2 border-br-[#ffffff] cursor-pointer z-100" onclick={() => window.location.href="/login"}>Sudah mempunyai akun? Masuk<svg class="w-4.25 fill-[#ffffff]" id="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="16 11 16 13 15 13 15 14 14 14 14 15 13 15 13 16 12 16 12 17 11 17 11 18 10 18 10 19 9 19 9 20 8 20 8 19 7 19 7 18 8 18 8 17 9 17 9 16 10 16 10 15 11 15 11 14 12 14 12 13 13 13 13 11 12 11 12 10 11 10 11 9 10 9 10 8 9 8 9 7 8 7 8 6 7 6 7 5 8 5 8 4 9 4 9 5 10 5 10 6 11 6 11 7 12 7 12 8 13 8 13 9 14 9 14 10 15 10 15 11 16 11"/></svg></button>
         </div>
 
         <svg class="absolute -bottom-17.5 zoom-300 max-sm:zoom-200 z-90" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
@@ -118,7 +118,7 @@
     </div>
 
     <div class="scrolledit w-full h-full bg-[#ffffff] flex flex-col px-25 py-17.5 overflow-auto relative z-100 max-sm:overflow-hidden max-sm:px-7.5 max-sm:py-7.5">
-        <h1 class="w-fit text-left text-[#1f2328] text-[20px] font-semibold">Masuk untuk Fasrun Paste</h1>
+        <h1 class="w-fit text-left text-[#1f2328] text-[20px] font-semibold">Daftar untuk Fasrun Paste</h1>
 
         <button class="w-full py-2.5 text-center bg-[#f6f8fa] text-[#1f2328] text-[15px] font-semibold rounded-[5px] mt-7.5 cursor-pointer border-[1.5px] border-[#d5dce3] transition-all duration-500 ease-in-out flex items-center justify-center gap-1.75 disabled:opacity-50"><svg class="w-4 fill-[#1f2328]" id="google" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="23 10 23 15 22 15 22 17 21 17 21 19 20 19 20 20 19 20 19 21 17 21 17 22 15 22 15 23 9 23 9 22 7 22 7 21 5 21 5 20 4 20 4 19 3 19 3 17 2 17 2 15 1 15 1 9 2 9 2 7 3 7 3 5 4 5 4 4 5 4 5 3 7 3 7 2 9 2 9 1 15 1 15 2 17 2 17 3 19 3 19 5 18 5 18 6 17 6 17 7 15 7 15 6 9 6 9 7 7 7 7 9 6 9 6 15 7 15 7 17 9 17 9 18 15 18 15 17 17 17 17 15 18 15 18 14 12 14 12 10 23 10"/></svg>Lanjutkan dengan google</button>
 
@@ -131,10 +131,17 @@
         <label for="email" class="leading-3 text-[15px] text-[#1f2328] font-semibold mt-5">Email</label>
         <input class="mt-2.5 rounded-[5px] border-[1.5px] border-[#d5dce3] text-[14px] text-[#1f2328] bg-[#ffffff]" type="email" placeholder="hutao@fasrun.my.id">
 
+        <label for="email" class="leading-3 text-[15px] text-[#1f2328] font-semibold mt-5">Username</label>
+        <input class="mt-2.5 rounded-[5px] border-[1.5px] border-[#d5dce3] text-[14px] text-[#1f2328] bg-[#ffffff]" type="text" placeholder="hutao imutz">
+        <p class="text-[12px] text-[#1f2328] mt-1.75">Harap gunakan nama yang baik dan benar, nama pengguna tidak mengandung unsur sara atau kekerasan lainnya.</p>
+
         <label for="email" class="leading-3 text-[15px] text-[#1f2328] font-semibold mt-5">Password</label>
         <input class="mt-2.5 rounded-[5px] border-[1.5px] border-[#d5dce3] text-[14px] text-[#1f2328] bg-[#ffffff]" type="password" placeholder="Password">
-        <p class="text-[12px] text-[#1f2328] mt-1.75">Masukkan password yang sudah anda buat pada saat register.</p>
+        <p class="text-[12px] text-[#1f2328] mt-1.75">Gunakan password yang kuat dengan minimal 6 karakter apapun untuk membuat password.</p>
 
-        <button class="w-full py-2.5 text-center bg-[#1f883d] text-[#ffffff] font-semibold rounded-[5px] mt-7 cursor-pointer">Masuk</button>
+        <label for="email" class="leading-3 text-[15px] text-[#1f2328] font-semibold mt-5">Konfirmasi password</label>
+        <input class="mt-2.5 rounded-[5px] border-[1.5px] border-[#d5dce3] text-[14px] text-[#1f2328] bg-[#ffffff]" type="password" placeholder="Konfirmasi">
+
+        <button class="w-full py-2.5 text-center bg-[#1f883d] text-[#ffffff] font-semibold rounded-[5px] mt-7 cursor-pointer transition-all duration-500 ease-in-out disabled:opacity-50">Mendaftar</button>
     </div>
 </main>
